@@ -1,18 +1,21 @@
+
+
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import './home.css';
 
 function Logout() {
   const navigate = useHistory();
   const deleteCookie = (name) => {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   };
-  
-  const handleLogout = () => {
-  
-    deleteCookie('access-token');
-  
 
-    navigate.push("/"); 
+  const handleLogout = () => {
+
+    deleteCookie('access-token');
+
+
+    navigate.push("/");
   }
 
   return (

@@ -151,11 +151,13 @@ span {
   top: 27px;
 
 }
-.back{
+
+.back {
   position: absolute;
   right: 47px;
   top: 27px;
 }
+
 #name {
   margin: 10px
 }

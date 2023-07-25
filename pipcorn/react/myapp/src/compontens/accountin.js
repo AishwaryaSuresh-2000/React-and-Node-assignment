@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
@@ -14,6 +16,7 @@ function Home() {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/products');
+        // console.log("hi",response)
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -40,7 +43,7 @@ function Home() {
 
     console.log(cookieValue)
     if (cookieValue) {
-      navigate.push("/profile")
+      navigate.push("/uploads")
     } else {
       navigate.push("/login")
     }
@@ -50,13 +53,12 @@ function Home() {
 
       <header>
 
-        <Link to="/home" className='pipcorn'>PIPCORN</Link>
+        <Link to="/" className='pipcorn'>PIPCORN</Link>
 
       </header>
 
       <img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" className='icon' alt=" " onClick={clickAccount} />
       <main>
-
         <h1>Featured Products</h1>
         <div className="products">
           {products.map((product) => (
@@ -69,9 +71,8 @@ function Home() {
                 <a href={`/product/${product._id}`}>
                   <p>{product.name}</p>
                 </a>
-                <p>{product.name}</p>
                 <p>
-                  <strong>{product.price}</strong>
+                  <strong>Price : {product.price}</strong>
                 </p>
 
                 <a href={`/product/${product._id}`} >Add to cart</a>
@@ -86,5 +87,9 @@ function Home() {
 }
 
 export default Home
+
+
+
+
 
 

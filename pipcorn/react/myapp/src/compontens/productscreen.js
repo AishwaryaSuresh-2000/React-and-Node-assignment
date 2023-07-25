@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function ProductScreen() {
   const { productId } = useParams();
@@ -34,12 +35,13 @@ function ProductScreen() {
           </div>
           <div className="product-info">
             <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>
-              <strong>Price: {product.price}</strong>
+            <p>{product.details}</p>
+            <p>Rating :{product.rating}</p>
+           
+            <p>Number of reviews:{product.numberofreviews}</p>
+             <p> <strong>Price: {product.price}</strong>
             </p>
-            {/* You can add more information about the product here */}
-            {/* <a href={`/product/${product.id}`}>Add to cart</a> */}
+            <Link to="/" className='back'>back</Link>
           </div>
         </div>
       </main>

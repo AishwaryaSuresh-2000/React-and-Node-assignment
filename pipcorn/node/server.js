@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import multer from "multer";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
-
+// import mongoose from "mongoose";
 const { sign, verify } = jwt;
 
 const app = express();
@@ -105,44 +105,37 @@ async function main() {
     }
   });
 
+
+  const imageSchema = new mongoose.Schema({
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+  });
+  
+  const Image = mongoose.model('Image', imageSchema);
+  
+ 
   app.get("/", cors(), (req, res) => { });
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "uploads/");
+      cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() + "-" + file.originalname);
+      cb(null, Date.now() + '-' + file.originalname);
     },
   });
-
   const upload = multer({ storage });
-
-  app.post(
-    "/account/upload/:productId",
-    upload.single("image"),
-    async (req, res) => {
-      if (!req.file) {
-        return res.status(400).json({ error: "No image uploaded" });
-      } else {
-        let product = await Product.findById(req.params.productId);
-
-        await Product.update(
-          {
-            image: req.file,
-          },
-          {
-            where: {
-              id: product.id,
-            },
-          }
-        );
-      }
-
-      res.json({ imageUrl: req.file.path });
+  
+  app.post('/upload', upload.single('image'), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image uploaded' });
     }
-  );
-
+  
+  
+    res.json({ message: 'Image uploaded successfully' });
+  });
   const newSchema = new mongoose.Schema({
     name: {
       type: String,
@@ -160,13 +153,11 @@ async function main() {
   const collection = mongoose.model("collection", newSchema);
 
   app.post("/login", async (req, res) => {
-    debugger;
-    console.log("test1");
+    
     const { email, password } = req.body;
 
     try {
       const user = await collection.findOne({ email: email });
-      console.log("wewe", user);
       const isMatch = await bcrypt.compare(password, user.password);
       if (user.email === email && isMatch) {
         console.log("sucess");
@@ -209,9 +200,7 @@ async function main() {
       res.json("fail");
     }
   });
-  app.get("/profile", validateToken, (req, res) => {
-    res.json("profile");
-  });
+  
 }
 
 app.listen(3000, () => {

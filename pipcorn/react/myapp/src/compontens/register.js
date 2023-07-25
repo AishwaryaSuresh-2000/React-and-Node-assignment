@@ -18,20 +18,20 @@ function SubmitForm() {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value)
-    setEmailError(false); 
+    setEmailError(false);
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
-    setPasswordError(false); 
+    setPasswordError(false);
   }
 
   const handleSubmit = event => {
     event.preventDefault();
 
     const validEmail = new RegExp(
-        '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
-        // '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]$'
+      '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+      // '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]$'
     );
 
     const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
@@ -39,7 +39,7 @@ function SubmitForm() {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    
+
     const isEmailValid = validEmail.test(email);
     const isPasswordValid = validPassword.test(password);
 
@@ -48,7 +48,7 @@ function SubmitForm() {
       setEmailError(true);
     }
 
-    
+
     if (!isPasswordValid) {
       setPasswordError(true);
     }
@@ -62,12 +62,12 @@ function SubmitForm() {
             console.log(res);
             if (res.data === "exist") {
               alert("User already exists");
-              
+
             } else if (res.data === "notexist") {
               alert("Registration successful");
               navigate.push("/login")
             }
-            
+
           })
           .catch(error => {
             console.error(error);
@@ -82,23 +82,23 @@ function SubmitForm() {
 
   return (
     <form onSubmit={handleSubmit} className='form'>
-       <h2>Submit  Page</h2>
+      <h2>Submit  Page</h2>
       <label className='label'>
         Person Name:
-        </label>
-        <input type="text" name="name" value={name}  placeholder="Enter Name.." className="register-input" onChange={handleNameChange} />
-      
+      </label>
+      <input type="text" name="name" value={name} placeholder="Enter Name.." className="register-input" onChange={handleNameChange} />
+
       <label className='label'>
         Enter email
-        </label>
+      </label>
       <input type="text" name="email" placeholder="Enter Email.." className="register-input" value={email} onChange={handleEmailChange} />
       {emailError && <span style={{ color: "red" }}>Invalid email format</span>}
-     
+
       <label className='label'>
         Enter Password
-        </label>
+      </label>
       <input type="password" name="password" placeholder="Enter Password.." className="register-input" value={password} onChange={handlePasswordChange} />
-      {passwordError && <span style={{ color: "red" }}>Password must be at least 6 characters long and contain letters and numbers</span>} 
+      {passwordError && <span style={{ color: "red" }}>Password must be at least 6 characters long and contain letters and numbers</span>}
       <button className="registerbutton" retype="submit">Submit</button>
     </form>
   );
